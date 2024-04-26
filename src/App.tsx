@@ -1,13 +1,10 @@
-import toDoIcon from "./assets/to-do-icon.png";
 import { PlusCircleIcon, ListX } from "lucide-react";
+import { Header } from "./components/header";
 
 function App() {
   return (
     <main>
-      <header>
-        <img src={toDoIcon} alt="To Do Icon" />
-        <h1>2 Do</h1>
-      </header>
+      <Header />
 
       <div>
         <input type="text" placeholder="Adicione uma nova tarefa" />
