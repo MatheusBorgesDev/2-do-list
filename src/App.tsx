@@ -1,36 +1,50 @@
 import { PlusCircleIcon, ListX } from "lucide-react";
 import { Header } from "./components/header";
 
+// const toDoListArray = [
+//   "Fazer compras no mercado",
+//   "Levar os cachorros para passear",
+//   "Lavar o carro",
+//   "Estudar programação",
+// ];
+
 function App() {
   return (
-    <main>
+    <div>
       <Header />
-
-      <div>
-        <input type="text" placeholder="Adicione uma nova tarefa" />
-        <button>
-          Criar <PlusCircleIcon />{" "}
-        </button>
-      </div>
-
-      <div>
-        <div>
-          <p>Tarefas criadas</p>
-          <p>0</p>
+      <main className="flex gap-16 flex-col w-[46rem] mx-auto -m-7">
+        <div className="flex justify-between gap-2 h-14">
+          <input
+            type="text"
+            placeholder="Adicione uma nova tarefa"
+            className="bg-slate-700 w-full px-4 rounded-lg"
+          />
+          <button className="flex items-center gap-2 bg-blue-800 text-sm font-bold px-4 rounded-lg hover:bg-blue-900">
+            Criar <PlusCircleIcon size={17} />
+          </button>
         </div>
 
-        <div>
-          <p>Concluídas</p>
-          <p>0</p>
-        </div>
-      </div>
+        <div className="flex justify-between items-center border-b-[1px] border-slate-500/50 pb-6 text-blue-400 font-semibold ">
+          <p>
+            Tarefas criadas{" "}
+            <span className="bg-slate-900 py-1 px-3 rounded-full">0</span>
+          </p>
 
-      <div>
-        <ListX />
-        <strong>Você ainda não tem tarefas cadastradas</strong>
-        <p>Crie tarefas e organize seus itens a fazer</p>
-      </div>
-    </main>
+          <p>
+            Concluídas{" "}
+            <span className="bg-slate-900 py-1 px-3 rounded-full">0</span>
+          </p>
+        </div>
+
+        <div className="flex flex-col items-center gap-4 opacity-50">
+          <ListX size={70} />
+          <div>
+            <strong>Você ainda não tem tarefas cadastradas</strong>
+            <p>Crie tarefas e organize seus itens a fazer</p>
+          </div>
+        </div>
+      </main>
+    </div>
   );
 }
 
