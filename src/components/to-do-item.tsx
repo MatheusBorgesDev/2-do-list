@@ -20,7 +20,7 @@ export function ToDoItem({ task }: ToDoItemProps) {
     <div className="flex items-center p-4 rounded-md gap-3 bg-slate-700">
       <label
         className={`flex items-center h-5 w-5 border-2 text-transparent border-blue-500 checked:bg-green-500 rounded-full ${
-          isChecked && "bg-blue-500 text-current"
+          isChecked && "bg-blue-500 text-white"
         }`}
       >
         <Check />

@@ -1,28 +1,46 @@
+import { ChangeEvent, useState } from "react";
 import { Header } from "./components/header";
 import { ToDoItem } from "./components/to-do-item";
 import { PlusCircleIcon, ListX } from "lucide-react";
 
-// const toDoListArray = [
-//   "Fazer compras no mercado",
-//   "Levar os cachorros para passear",
-//   "Lavar o carro",
-//   "Estudar programação",
-// ];
-
 const haveList = true;
 
 function App() {
+  const [toDoList, setToDoList] = useState<string[]>([
+    "Fazer compras no mercado",
+    "Levar os cachorros para passear",
+    "Lavar o carro",
+    "Estudar programação",
+    "Pintar telas",
+  ]);
+
+  const [task, setTask] = useState("");
+
+  function handleAddTask(event: ChangeEvent<HTMLInputElement>) {
+    const newTask = event.target.value;
+    setTask(newTask);
+  }
+
+  function handleNewTask() {
+    setToDoList([...toDoList, task]);
+    setTask("");
+  }
+
   return (
     <div>
       <Header />
-      <main className="flex gap-16 flex-col w-[46rem] mx-auto -m-7">
+      <main className="flex gap-16 flex-col w-[46rem] mx-auto -m-7 ">
         <div className="flex justify-between gap-2 h-14">
           <input
             type="text"
+            onChange={handleAddTask}
             placeholder="Adicione uma nova tarefa"
             className="bg-slate-700 w-full px-4 rounded-lg"
           />
-          <button className="flex items-center gap-2 bg-blue-800 text-sm font-bold px-4 rounded-lg hover:bg-blue-900">
+          <button
+            onClick={handleNewTask}
+            className="flex items-center gap-2 bg-blue-800 text-sm font-bold px-4 rounded-lg hover:bg-blue-900"
+          >
             Criar <PlusCircleIcon size={17} />
           </button>
         </div>
@@ -41,10 +59,9 @@ function App() {
 
         {haveList ? (
           <div className="flex flex-col gap-3">
-            <ToDoItem task="Fazer compras no mercado" />
-            <ToDoItem task="Levar os cachorros para passear" />
-            <ToDoItem task="Lavar o carro" />
-            <ToDoItem task="Estudar programação" />
+            {toDoList.map((task) => (
+              <ToDoItem task={task} />
+            ))}
           </div>
         ) : (
           <div className="flex flex-col items-center gap-4 opacity-50">
