@@ -1,5 +1,6 @@
-import { PlusCircleIcon, ListX } from "lucide-react";
 import { Header } from "./components/header";
+import { ToDoItem } from "./components/to-do-item";
+import { PlusCircleIcon, ListX } from "lucide-react";
 
 // const toDoListArray = [
 //   "Fazer compras no mercado",
@@ -7,6 +8,8 @@ import { Header } from "./components/header";
 //   "Lavar o carro",
 //   "Estudar programação",
 // ];
+
+const haveList = true;
 
 function App() {
   return (
@@ -36,13 +39,22 @@ function App() {
           </p>
         </div>
 
-        <div className="flex flex-col items-center gap-4 opacity-50">
-          <ListX size={70} />
-          <div>
-            <strong>Você ainda não tem tarefas cadastradas</strong>
-            <p>Crie tarefas e organize seus itens a fazer</p>
+        {haveList ? (
+          <div className="flex flex-col gap-3">
+            <ToDoItem task="Fazer compras no mercado" />
+            <ToDoItem task="Levar os cachorros para passear" />
+            <ToDoItem task="Lavar o carro" />
+            <ToDoItem task="Estudar programação" />
           </div>
-        </div>
+        ) : (
+          <div className="flex flex-col items-center gap-4 opacity-50">
+            <ListX size={70} />
+            <div>
+              <strong>Você ainda não tem tarefas cadastradas</strong>
+              <p>Crie tarefas e organize seus itens a fazer</p>
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );
