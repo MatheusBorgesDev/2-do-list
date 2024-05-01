@@ -3,9 +3,10 @@ import { useState } from "react";
 
 interface ToDoItemProps {
   task: string;
+  onDeleteComment: (task: string) => void;
 }
 
-export function ToDoItem({ task }: ToDoItemProps) {
+export function ToDoItem({ task, onDeleteComment }: ToDoItemProps) {
   const [isChecked, setIsChecked] = useState(false);
 
   function handleCheckBox() {
@@ -14,6 +15,10 @@ export function ToDoItem({ task }: ToDoItemProps) {
     } else {
       setIsChecked(true);
     }
+  }
+
+  function handleRemoveTask() {
+    onDeleteComment(task);
   }
 
   return (
@@ -31,7 +36,10 @@ export function ToDoItem({ task }: ToDoItemProps) {
         {task}
       </p>
 
-      <button className="opacity-60 hover:text-red-500 hover:opacity-100">
+      <button
+        onClick={handleRemoveTask}
+        className="opacity-60 hover:text-red-500 hover:opacity-100"
+      >
         <Trash size={20} />
       </button>
     </div>

@@ -33,6 +33,14 @@ function App() {
     }
   }
 
+  function onDeleteComment(taskToDelete: string) {
+    const filteredTaks = toDoList.filter((task) => task !== taskToDelete);
+
+    setToDoList(filteredTaks);
+
+    setTotalTasks(filteredTaks.length);
+  }
+
   return (
     <div>
       <Header />
@@ -71,7 +79,7 @@ function App() {
           {haveList ? (
             <div className="flex flex-col gap-3">
               {toDoList.map((task) => (
-                <ToDoItem task={task} />
+                <ToDoItem task={task} onDeleteComment={onDeleteComment} />
               ))}
             </div>
           ) : (
