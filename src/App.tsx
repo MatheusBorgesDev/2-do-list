@@ -1,14 +1,35 @@
 import { ChangeEvent, useState } from "react";
+
 import { Header } from "./components/header";
 import { ToDoItem } from "./components/to-do-item";
+
 import { PlusCircleIcon, ListX } from "lucide-react";
 
-function App() {
-  const [toDoList, setToDoList] = useState<string[]>([]);
+interface TaskItem {
+  task: string;
+  isChecked: boolean;
+}
+
+export function App() {
+  const [toDoList, setToDoList] = useState<TaskItem[]>([
+    { task: "Fazer compras no mercado", isChecked: false },
+    { task: "Levar os cachorros para passear", isChecked: false },
+    { task: "Lavar o carro", isChecked: false },
+    { task: "Estudar programação", isChecked: true },
+    { task: "Pintar telas", isChecked: true },
+  ]);
 
   const [task, setTask] = useState("");
 
   const [totalTasks, setTotalTasks] = useState(toDoList.length);
+
+  const [checkedTasks, setCheckedTasks] = useState(() => {
+    const filteredCheckToDoList = toDoList.filter(
+      (task) => task.isChecked
+    ).length;
+
+    return filteredCheckToDoList;
+  });
 
   function handleAddTask(event: ChangeEvent<HTMLInputElement>) {
     setTask(event.target.value);
@@ -16,27 +37,47 @@ function App() {
 
   function handleNewTask() {
     if (task !== "") {
-      setToDoList((prevState) => {
-        const newToDoList = [...prevState, task];
-        setTotalTasks(newToDoList.length);
-        return newToDoList;
-      });
+      setToDoList((prevState) => [
+        ...prevState,
+        { task: task, isChecked: false },
+      ]);
       setTask("");
+      setTotalTasks(totalTasks + 1);
     }
   }
 
-  function onDeleteComment(taskToDelete: string) {
-    const filteredTaks = toDoList.filter((task) => task !== taskToDelete);
+  function onDeleteTask(taskToDelete: string) {
+    const filteredTasks = toDoList.filter((task) => task.task !== taskToDelete);
 
-    setToDoList(filteredTaks);
+    setToDoList(filteredTasks);
 
-    setTotalTasks(filteredTaks.length);
+    setTotalTasks(filteredTasks.length);
+
+    const checkedCount = filteredTasks.filter((task) => task.isChecked).length;
+
+    setCheckedTasks(checkedCount);
+  }
+
+  function onCheckTask(index: number, isChecked: boolean) {
+    setToDoList((prevState) => {
+      const updatedToDoList = [...prevState];
+
+      updatedToDoList[index].isChecked = isChecked;
+
+      const checkedCount = updatedToDoList.filter(
+        (task) => task.isChecked
+      ).length;
+
+      setCheckedTasks(checkedCount);
+
+      return updatedToDoList;
+    });
   }
 
   return (
     <div>
       <Header />
-      <main className="flex gap-16 flex-col w-[46rem] mx-auto -m-7 ">
+      <main className="flex gap-16 flex-col w-[46rem] mx-auto -m-7">
         <div className="flex justify-between gap-2 h-14">
           <input
             type="text"
@@ -64,14 +105,23 @@ function App() {
 
             <p>
               Concluídas{" "}
-              <span className="bg-slate-900 py-1 px-3 rounded-full">0</span>
+              <span className="bg-slate-900 py-1 px-3 rounded-full">
+                {checkedTasks}
+              </span>
             </p>
           </div>
 
           {toDoList.length !== 0 ? (
             <div className="flex flex-col gap-3">
-              {toDoList.map((task) => (
-                <ToDoItem task={task} onDeleteComment={onDeleteComment} />
+              {toDoList.map((task, index) => (
+                <ToDoItem
+                  key={index}
+                  index={index}
+                  task={task.task}
+                  onDeleteTask={onDeleteTask}
+                  onCheckTask={onCheckTask}
+                  isChecked={task.isChecked}
+                />
               ))}
             </div>
           ) : (
@@ -88,5 +138,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

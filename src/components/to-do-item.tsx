@@ -1,24 +1,26 @@
 import { Check, Trash } from "lucide-react";
-import { useState } from "react";
 
 interface ToDoItemProps {
+  index: number;
   task: string;
-  onDeleteComment: (task: string) => void;
+  isChecked: boolean;
+  onDeleteTask: (task: string) => void;
+  onCheckTask: (index: number, isChecked: boolean) => void;
 }
 
-export function ToDoItem({ task, onDeleteComment }: ToDoItemProps) {
-  const [isChecked, setIsChecked] = useState(false);
-
+export function ToDoItem({
+  index,
+  task,
+  isChecked,
+  onDeleteTask: onDeleteTask,
+  onCheckTask,
+}: ToDoItemProps) {
   function handleCheckBox() {
-    if (isChecked) {
-      setIsChecked(false);
-    } else {
-      setIsChecked(true);
-    }
+    onCheckTask(index, !isChecked);
   }
 
   function handleRemoveTask() {
-    onDeleteComment(task);
+    onDeleteTask(task);
   }
 
   return (
