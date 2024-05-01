@@ -3,16 +3,8 @@ import { Header } from "./components/header";
 import { ToDoItem } from "./components/to-do-item";
 import { PlusCircleIcon, ListX } from "lucide-react";
 
-const haveList = true;
-
 function App() {
-  const [toDoList, setToDoList] = useState<string[]>([
-    "Fazer compras no mercado",
-    "Levar os cachorros para passear",
-    "Lavar o carro",
-    "Estudar programação",
-    "Pintar telas",
-  ]);
+  const [toDoList, setToDoList] = useState<string[]>([]);
 
   const [task, setTask] = useState("");
 
@@ -76,7 +68,7 @@ function App() {
             </p>
           </div>
 
-          {haveList ? (
+          {toDoList.length !== 0 ? (
             <div className="flex flex-col gap-3">
               {toDoList.map((task) => (
                 <ToDoItem task={task} onDeleteComment={onDeleteComment} />
