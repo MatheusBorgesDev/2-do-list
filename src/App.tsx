@@ -11,25 +11,14 @@ interface TaskItem {
 }
 
 export function App() {
-  const [toDoList, setToDoList] = useState<TaskItem[]>([
-    { task: "Fazer compras no mercado", isChecked: false },
-    { task: "Levar os cachorros para passear", isChecked: false },
-    { task: "Lavar o carro", isChecked: false },
-    { task: "Estudar programação", isChecked: true },
-    { task: "Pintar telas", isChecked: true },
-  ]);
+  const [toDoList, setToDoList] = useState<TaskItem[]>([]);
+
+  // lodash
 
   const [task, setTask] = useState("");
 
-  const [totalTasks, setTotalTasks] = useState(toDoList.length);
-
-  const [checkedTasks, setCheckedTasks] = useState(() => {
-    const filteredCheckToDoList = toDoList.filter(
-      (task) => task.isChecked
-    ).length;
-
-    return filteredCheckToDoList;
-  });
+  const totalTasksAmount = toDoList.length;
+  const checkedTasksAmount = toDoList.filter((task) => task.isChecked).length;
 
   function handleAddTask(event: ChangeEvent<HTMLInputElement>) {
     setTask(event.target.value);
@@ -42,7 +31,6 @@ export function App() {
         { task: task, isChecked: false },
       ]);
       setTask("");
-      setTotalTasks(totalTasks + 1);
     }
   }
 
@@ -50,12 +38,6 @@ export function App() {
     const filteredTasks = toDoList.filter((task) => task.task !== taskToDelete);
 
     setToDoList(filteredTasks);
-
-    setTotalTasks(filteredTasks.length);
-
-    const checkedCount = filteredTasks.filter((task) => task.isChecked).length;
-
-    setCheckedTasks(checkedCount);
   }
 
   function onCheckTask(index: number, isChecked: boolean) {
@@ -63,12 +45,6 @@ export function App() {
       const updatedToDoList = [...prevState];
 
       updatedToDoList[index].isChecked = isChecked;
-
-      const checkedCount = updatedToDoList.filter(
-        (task) => task.isChecked
-      ).length;
-
-      setCheckedTasks(checkedCount);
 
       return updatedToDoList;
     });
@@ -99,14 +75,14 @@ export function App() {
             <p>
               Tarefas criadas{" "}
               <span className="bg-slate-900 py-1 px-3 rounded-full">
-                {totalTasks}
+                {totalTasksAmount}
               </span>
             </p>
 
             <p>
               Concluídas{" "}
               <span className="bg-slate-900 py-1 px-3 rounded-full">
-                {checkedTasks}
+                {checkedTasksAmount}
               </span>
             </p>
           </div>
