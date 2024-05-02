@@ -13,8 +13,6 @@ interface TaskItem {
 export function App() {
   const [toDoList, setToDoList] = useState<TaskItem[]>([]);
 
-  // lodash
-
   const [task, setTask] = useState("");
 
   const totalTasksAmount = toDoList.length;
@@ -31,6 +29,8 @@ export function App() {
         { task: task, isChecked: false },
       ]);
       setTask("");
+    } else {
+      alert("Digite uma tarefa");
     }
   }
 
